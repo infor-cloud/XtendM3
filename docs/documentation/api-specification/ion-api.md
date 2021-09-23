@@ -6,7 +6,7 @@ grand_parent: Documentation
 nav_order: 6
 ---
 
-# Extension API
+# ION API
 {: .no_toc }
 
 {: .fs-6 .fw-300 }
@@ -27,9 +27,8 @@ nav_order: 6
 ## Description
 The ION API can be used to connect to M3 data by using ION API calls. There are several API methods to use the ION API depending on the user's need.
 
-## Features
-### POST method
-This method performs a POST request and returns an ION Response object.
+
+Imports and instances for every method:
 ```groovy
 import groovy.json.JsonException
 import groovy.json.JsonSlurper
@@ -42,7 +41,49 @@ public class SampleExtension extends ExtendM3Trigger {
     this.ion = ion
     this.logger = logger
   }
+```
+JSON slurper parses text or reader content into a data structure of lists and maps.
 
+```groovy
+    JsonSlurper slurper = new JsonSlurper()
+    Map parsed = (Map)slurper.parseText(content)
+    List<String> fileFormats = (List)parsed.get("SupportedFileFormats")
+    for (String format : fileFormats) {
+      logger.debug("Supporting format: ${format}")
+    }
+  }
+}
+```
+Example:
+```groovy
+def content = '''{
+    "DBcont": [
+        {
+            "index": "00",
+            "selection": "MWWHLO",
+        },
+        {
+            "index": "00",
+            "selection": "OBORQT",
+        },
+        {
+            "index": "00",
+            "selection": "OAAGNT",
+        }
+    ]
+}
+'''
+
+
+[{"index" : "00" , "selection" :"MWWHLO"}; {"index" : "00" , "selection" :"OBORQT"}; {"index" : "00" , "selection" :"OAAGNT"}]
+
+```
+
+## Features
+### POST method
+This method performs a POST request and returns an ION Response object.
+
+```groovy
   @Override
   void main() {
     def endpoint = "/IONAttachment/supportedfile/list"
@@ -58,36 +99,19 @@ public class SampleExtension extends ExtendM3Trigger {
       logger.debug("Expected status 200 but got ${response.getStatusCode()} instead")
       return
     }
+
     String content = response.getContent()
     if (content != null) {
       logger.debug("Expected content from the request but got no content")
       return
     }
-    JsonSlurper slurper = new JsonSlurper()
-    Map parsed = (Map)slurper.parseText(content)
-    List<String> fileFormats = (List)parsed.get("SupportedFileFormats")
-    for (String format : fileFormats) {
-      logger.debug("Supporting format: ${format}")
-    }
-  }
-}
+
 ```
 
 ### GET method
 This method performs a GET request and returns an ION Response object.
+
 ```groovy
-import groovy.json.JsonException
-import groovy.json.JsonSlurper
-
-public class SampleExtension extends ExtendM3Trigger {
-  private final IonAPI ion
-  private final LoggerAPI logger
-
-  public SampleExtension(IonAPI ion, LoggerAPI logger) {
-    this.ion = ion
-    this.logger = logger
-  }
-
   @Override
   void main() {
     def endpoint = "/IONAttachment/supportedfile/list"
@@ -107,31 +131,11 @@ public class SampleExtension extends ExtendM3Trigger {
       logger.debug("Expected content from the request but got no content")
       return
     }
-    JsonSlurper slurper = new JsonSlurper()
-    Map parsed = (Map)slurper.parseText(content)
-    List<String> fileFormats = (List)parsed.get("SupportedFileFormats")
-    for (String format : fileFormats) {
-      logger.debug("Supporting format: ${format}")
-    }
-  }
-}
 ```
 
 ### PUT method
 This method performs a PUT request and returns an ION Response object.
 ```groovy
-import groovy.json.JsonException
-import groovy.json.JsonSlurper
-
-public class SampleExtension extends ExtendM3Trigger {
-  private final IonAPI ion
-  private final LoggerAPI logger
-
-  public SampleExtension(IonAPI ion, LoggerAPI logger) {
-    this.ion = ion
-    this.logger = logger
-  }
-
   @Override
   void main() {
     def endpoint = "/IONAttachment/supportedfile/list"
@@ -147,36 +151,17 @@ public class SampleExtension extends ExtendM3Trigger {
       logger.debug("Expected status 200 but got ${response.getStatusCode()} instead")
       return
     }
+
     String content = response.getContent()
     if (content != null) {
       logger.debug("Expected content from the request but got no content")
       return
     }
-    JsonSlurper slurper = new JsonSlurper()
-    Map parsed = (Map)slurper.parseText(content)
-    List<String> fileFormats = (List)parsed.get("SupportedFileFormats")
-    for (String format : fileFormats) {
-      logger.debug("Supporting format: ${format}")
-    }
-  }
-}
 ```
 
 ### DELETE method
 This method performs a DELETE request and returns an ION Response object.
 ```groovy
-import groovy.json.JsonException
-import groovy.json.JsonSlurper
-
-public class SampleExtension extends ExtendM3Trigger {
-  private final IonAPI ion
-  private final LoggerAPI logger
-
-  public SampleExtension(IonAPI ion, LoggerAPI logger) {
-    this.ion = ion
-    this.logger = logger
-  }
-
   @Override
   void main() {
     def endpoint = "/IONAttachment/supportedfile/list"
@@ -196,14 +181,6 @@ public class SampleExtension extends ExtendM3Trigger {
       logger.debug("Expected content from the request but got no content")
       return
     }
-    JsonSlurper slurper = new JsonSlurper()
-    Map parsed = (Map)slurper.parseText(content)
-    List<String> fileFormats = (List)parsed.get("SupportedFileFormats")
-    for (String format : fileFormats) {
-      logger.debug("Supporting format: ${format}")
-    }
-  }
-}
 ```
 
 ## Considerations and Guidelines
