@@ -21,8 +21,9 @@ How to work with exceptions in XtendM3
 
 ## Exception capabilities
 In the context of XtendM3, it is possible to catch generic Java exceptions listed below in the Generic Java Exceptions section.<br/>
-It is not possible to throw generic Java exceptions, these can only be caught.<br>
-Some XtendM3 specific exceptions exists, that can be thrown either via API calls or via Groovy throw(). Documentation on the XtendM3 exceptions API are available in the [API Specification/ExceptionAPI](../api-specification/exception-api) section under Documentation.
+It is not possible to throw generic Java exceptions, these can only be caught. <br>
+Some XtendM3 specific exceptions exists, that can be thrown either via API calls or via Groovy throw().<br>
+Documentation on the XtendM3 exceptions API are available in the [API Specification/ExceptionAPI](../api-specification/exception-api) section under Documentation.
 
 ### Generic Java Exceptions
 The following exceptions can be caught in XtendM3 code:<br/>
